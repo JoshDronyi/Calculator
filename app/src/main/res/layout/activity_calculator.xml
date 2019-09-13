@@ -47,7 +47,10 @@
                     android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:text="@string/one"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"
+                    />
 
                 <Button
                     android:id="@+id/btn_2"
@@ -56,7 +59,9 @@
                     android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:text="@string/two"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
                 <Button
                     android:id="@+id/btn_3"
@@ -65,7 +70,9 @@
                     android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:text="@string/three"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
             </LinearLayout>
 
@@ -85,7 +92,9 @@
                     android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:text="@string/four"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
                 <Button
                     android:id="@+id/btn_5"
@@ -94,7 +103,9 @@
                     android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:text="@string/five"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
                 <Button
                     android:id="@+id/btn_6"
@@ -103,7 +114,9 @@
                     android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:text="@string/six"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -120,7 +133,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/seven"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
                 <Button
                     android:id="@+id/btn_8"
@@ -128,7 +143,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/eight"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
                 <Button
                     android:id="@+id/btn_9"
@@ -136,7 +153,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/nine"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
             </LinearLayout>
 
@@ -153,7 +172,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/zero"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
                 <Button
                     android:id="@+id/btn_Point"
@@ -161,7 +182,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/point"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
                 <Button
                     android:id="@+id/btn_Equals"
@@ -169,7 +192,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/equals"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black"/>
 
 
             </LinearLayout>
@@ -191,7 +216,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@string/clear"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:background="@color/black"/>
 
             <Button
                 android:id="@+id/btn_plus"
@@ -199,7 +226,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@string/plus"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:background="@color/black"/>
 
             <Button
                 android:id="@+id/btn_minus"
@@ -207,7 +236,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@string/minus"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:background="@color/black"/>
 
             <Button
                 android:id="@+id/btn_multiply"
@@ -215,7 +246,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@string/multiply"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:background="@color/black"/>
 
             <Button
                 android:id="@+id/btn_divide"
@@ -223,7 +256,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@string/divide"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:background="@color/black"/>
 
         </LinearLayout>
     </LinearLayout>

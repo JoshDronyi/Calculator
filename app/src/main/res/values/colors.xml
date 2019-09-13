@@ -230,4 +230,5 @@
     <color name="dark_slate_blue">#483D8B</color>
 
     <color name="steel_blue">#4682B4</color>
+    <color name="black">#000000</color>
 </resources>
