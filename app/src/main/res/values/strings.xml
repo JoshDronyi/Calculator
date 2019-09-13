@@ -15,6 +15,6 @@
     <string name="multiply">X</string>
     <string name="divide">/</string>
     <string name="zero">0</string>
-    <string name="dot">.</string>
+    <string name="point">.</string>
     <string name="equals">=</string>
 </resources>
