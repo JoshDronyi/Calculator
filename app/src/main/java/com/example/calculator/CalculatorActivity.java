@@ -15,11 +15,15 @@ public class CalculatorActivity extends AppCompatActivity {
 
     TextView display;
     Button btnZero, btnOne, btnTwo, btnThree,btnFour,btnFive,btnSix,btnSeven,btnEight,btnNine;
+    Button btnPoint, btnClear, btnPlus, btnMinus, btnMultiply, btnDivide, btnEquals;
+
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
             Button buttonInstance = (Button) view;
             Toast.makeText(CalculatorActivity.this, buttonInstance.getText() , Toast.LENGTH_SHORT).show();
+
         }
     };
 
@@ -43,6 +47,14 @@ public class CalculatorActivity extends AppCompatActivity {
         btnEight = findViewById(R.id.btn_8);
         btnNine = findViewById(R.id.btn_9);
 
+        btnPoint = findViewById(R.id.btn_Point);
+        btnPlus = findViewById(R.id.btn_plus);
+        btnMinus = findViewById(R.id.btn_minus);
+        btnMultiply = findViewById(R.id.btn_multiply);
+        btnDivide = findViewById(R.id.btn_divide);
+        btnClear = findViewById(R.id.btn_clear);
+        btnEquals = findViewById(R.id.btn_Equals);
+
         //Event Handler attached
         btnZero.setOnClickListener(listener);
         btnOne.setOnClickListener(listener);
@@ -54,5 +66,14 @@ public class CalculatorActivity extends AppCompatActivity {
         btnSeven.setOnClickListener(listener);
         btnEight.setOnClickListener(listener);
         btnNine.setOnClickListener(listener);
+
+        btnPoint.setOnClickListener(listener);
+        btnPlus.setOnClickListener(listener);
+        btnMinus.setOnClickListener(listener);
+        btnMultiply.setOnClickListener(listener);
+        btnDivide.setOnClickListener(listener);
+        btnClear.setOnClickListener(listener);
+        btnEquals.setOnClickListener(listener);
+
     }
 }
