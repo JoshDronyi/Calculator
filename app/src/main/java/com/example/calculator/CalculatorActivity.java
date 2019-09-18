@@ -29,6 +29,7 @@ public class CalculatorActivity extends AppCompatActivity {
     public final static String MULTIPLICATION = "x";
     public final static String DIVISION = "/";
     public final static String CLEAR = "C";
+    public final static String EQUALS = "=";
 
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
@@ -44,38 +45,50 @@ public class CalculatorActivity extends AppCompatActivity {
 
             if (screenText.startsWith(DEFAULT_SCREEN_VALUE)) {
                 newText = buttonInstance.getText().toString();
-                Toast.makeText(CalculatorActivity.this, "Default Values", Toast.LENGTH_SHORT).show();
+                screen.setText(newText);
             } else if (buttonText.equals(ADDITION)) {
-                Toast.makeText(CalculatorActivity.this, "Adding new Values", Toast.LENGTH_SHORT).show();
 
                 Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-                newText = Add(screenText);
+                newText = screenText + ADDITION;
+                screen.setText(newText);
+//                        Add(screenText); Function to ensure one can use multiple operations
 
             } else if (buttonText.equals((SUBTRACTION))) {
-                Toast.makeText(CalculatorActivity.this, "Subtractiong Values", Toast.LENGTH_SHORT).show();
+                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-                newText = Subtract(screenText);
+                newText =  screenText + SUBTRACTION;
+                screen.setText(newText);
+//                        Subtract(screenText); Function to ensure one can use multiple operations
             } else if (buttonText.equals((MULTIPLICATION))) {
-                Toast.makeText(CalculatorActivity.this, "Multiplying Values", Toast.LENGTH_SHORT).show();
+                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-                newText = Multiply(screenText);
+                newText = screenText + MULTIPLICATION;
+                screen.setText(newText);
+//                        Multiply(screenText); Function to ensure one can use multiple operations
             } else if (buttonText.equals((DIVISION))) {
-                Toast.makeText(CalculatorActivity.this, "Dividing Values", Toast.LENGTH_SHORT).show();
+                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-                newText = Divide(screenText);
-            } else if (buttonText.equalsIgnoreCase("C")) {
-                screen.setText("");
+                newText =  screenText + DIVISION;
+                screen.setText(newText);
+
+//                        Divide(screenText); Function to ensure one can use multiple operations
+            } else if (buttonText.equalsIgnoreCase(CLEAR)) {
+                screen.setText(DEFAULT_SCREEN_VALUE);
                 firstNumber = null;
                 secondNumber = null;
                 operation = null;
+            } else if (buttonText.equals(EQUALS)){
+                Equals(screen.getText().toString());
+
             } else {
-                newText = screen.getText().toString() + buttonInstance.getText();
+                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+                newText = screenText + buttonInstance.getText();
+                screen.setText(newText);
             }
 
-            screen.setText(newText);
 
-            Toast.makeText(CalculatorActivity.this, buttonInstance.getText(), Toast.LENGTH_SHORT).show();
+
 
         }
     };
@@ -88,8 +101,9 @@ public class CalculatorActivity extends AppCompatActivity {
             operatorIndex = currentScreenText.indexOf("/");
 
             firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-            Toast.makeText(this, "" + firstNumber, Toast.LENGTH_SHORT).show();
 
+        } else {
+            firstNumber = Double.parseDouble(currentScreenText);
         }
         newScreenText = firstNumber + " / ";
 
@@ -104,8 +118,9 @@ public class CalculatorActivity extends AppCompatActivity {
             operatorIndex = currentScreenText.indexOf("x");
 
             firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-            Toast.makeText(this, "" + firstNumber, Toast.LENGTH_SHORT).show();
 
+        } else {
+            firstNumber = Double.parseDouble(currentScreenText);
         }
         newScreenText = firstNumber + " x ";
 
@@ -120,15 +135,16 @@ public class CalculatorActivity extends AppCompatActivity {
             operatorIndex = currentScreenText.indexOf("-");
 
             firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-            Toast.makeText(this, "" + firstNumber, Toast.LENGTH_SHORT).show();
 
+        } else {
+            firstNumber = Double.parseDouble(currentScreenText);
         }
         newScreenText = firstNumber + " - ";
 
         return newScreenText;
     }
 
-    public String Add(String currentScreenText) {
+    private String Add(String currentScreenText) {
         String newScreenText;
         int operatorIndex;
 
@@ -136,7 +152,7 @@ public class CalculatorActivity extends AppCompatActivity {
             operatorIndex = currentScreenText.indexOf("+");
 
             firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));  //Because we do not want the operator in this
-            Toast.makeText(this, " " + firstNumber, Toast.LENGTH_SHORT).show();
+
         } else {
             firstNumber = Double.parseDouble(currentScreenText);
         }
@@ -146,6 +162,108 @@ public class CalculatorActivity extends AppCompatActivity {
         return newScreenText;
     }
 
+    private void Equals(String equation) {
+
+        int operationIndex;
+
+        if (equation.contains(ADDITION)) {
+            Log.i("full text", "the full equation: " + equation);
+
+
+            operationIndex = equation.indexOf(ADDITION) + 1;
+            String firstNumberString = equation.substring(0,operationIndex - 1),secondNumberString = equation.substring(operationIndex);
+
+
+
+            Log.i("*****first NumberString", "firstNumberString was: " + firstNumberString);
+            Log.i("***second NumberString", "secondNumberString was: " + secondNumberString);
+
+            firstNumber = Double.parseDouble(firstNumberString);
+            secondNumber = Double.parseDouble(secondNumberString);
+
+            Log.i("first Number ", "firstNumber was: " + firstNumber);
+            Log.i("second Number ", "secondNumber was: " + secondNumber);
+
+            double result =firstNumber + secondNumber;
+            Log.i("***********EndResult ", "The end result was: " + result);
+
+            screen.setText(String.valueOf(result));
+
+        }
+        if (equation.contains(SUBTRACTION)) {
+            Log.i("full text", "the full equation: " + equation);
+
+
+            operationIndex = equation.indexOf(SUBTRACTION) + 1;
+            String firstNumberString = equation.substring(0,operationIndex - 1);
+            String secondNumberString = equation.substring(operationIndex);
+
+
+
+            Log.i("*****first NumberString", "firstNumberString was: " + firstNumberString);
+            Log.i("***second NumberString", "secondNumberString was: " + secondNumberString);
+
+            firstNumber = Double.parseDouble(firstNumberString);
+            secondNumber = Double.parseDouble(secondNumberString);
+
+            Log.i("first Number ", "firstNumber was: " + firstNumber);
+            Log.i("second Number ", "secondNumber was: " + secondNumber);
+
+            double result =firstNumber - secondNumber;
+            Log.i("***********EndResult ", "The end result was: " + result);
+
+            screen.setText(String.valueOf(result));
+
+        }
+        if (equation.contains(DIVISION)) {
+            Log.i("full text", "the full equation: " + equation);
+
+
+            operationIndex = equation.indexOf(DIVISION) + 1;
+            String firstNumberString = equation.substring(0,operationIndex - 1),secondNumberString = equation.substring(operationIndex);
+
+
+
+            Log.i("*****first NumberString", "firstNumberString was: " + firstNumberString);
+            Log.i("***second NumberString", "secondNumberString was: " + secondNumberString);
+
+            firstNumber = Double.parseDouble(firstNumberString);
+            secondNumber = Double.parseDouble(secondNumberString);
+
+            Log.i("first Number ", "firstNumber was: " + firstNumber);
+            Log.i("second Number ", "secondNumber was: " + secondNumber);
+
+            double result =firstNumber / secondNumber;
+            Log.i("***********EndResult ", "The end result was: " + result);
+
+            screen.setText(String.valueOf(result));
+
+        }
+        if (equation.contains(MULTIPLICATION)) {
+            Log.i("full text", "the full equation: " + equation);
+
+
+            operationIndex = equation.indexOf(MULTIPLICATION) + 1;
+            String firstNumberString = equation.substring(0,operationIndex - 1),secondNumberString = equation.substring(operationIndex);
+
+
+
+            Log.i("*****first NumberString", "firstNumberString was: " + firstNumberString);
+            Log.i("***second NumberString", "secondNumberString was: " + secondNumberString);
+
+            firstNumber = Double.parseDouble(firstNumberString);
+            secondNumber = Double.parseDouble(secondNumberString);
+
+            Log.i("first Number ", "firstNumber was: " + firstNumber);
+            Log.i("second Number ", "secondNumber was: " + secondNumber);
+
+            double result =firstNumber * secondNumber;
+            Log.i("***********EndResult ", "The end result was: " + result);
+
+            screen.setText(String.valueOf(result));
+
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
