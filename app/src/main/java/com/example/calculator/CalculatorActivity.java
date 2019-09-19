@@ -1,23 +1,26 @@
 package com.example.calculator;
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CalculatorActivity extends AppCompatActivity {
 
     //Variables for the calculator
 
-    TextView screen;
-    Button btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine;
-    Button btnPoint, btnClear, btnPlus, btnMinus, btnMultiply, btnDivide, btnEquals;
+    @BindView(R.id.screen) TextView screen;
+
+
+
+
 
     Double firstNumber = null, secondNumber = null;
     String operation;
@@ -31,121 +34,49 @@ public class CalculatorActivity extends AppCompatActivity {
     public final static String CLEAR = "C";
     public final static String EQUALS = "=";
 
-    View.OnClickListener listener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_calculator);
 
-            Button buttonInstance = (Button) view;
-            String newText = null;
+        ButterKnife.bind(this);
 
-            screen = findViewById(R.id.screen);
+    }
 
-            String screenText = screen.getText().toString();
-            String buttonText = buttonInstance.getText().toString();
 
-            if (screenText.startsWith(DEFAULT_SCREEN_VALUE)) {
-                newText = buttonInstance.getText().toString();
-                screen.setText(newText);
-            } else if (buttonText.equals(ADDITION)) {
+    @OnClick({R.id.btn_0,R.id.btn_1,R.id.btn_2,R.id.btn_3,R.id.btn_4,R.id.btn_5,R.id.btn_6,R.id.btn_7,R.id.btn_8,R.id.btn_9,R.id.btn_Point})
+    public void numberWasClicked(Button button)
+    {
+        Button buttonInstance = button;
+        String newText = null;
 
-                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+        screen = findViewById(R.id.screen);
 
-                newText = screenText + ADDITION;
-                screen.setText(newText);
+        String screenText = screen.getText().toString();
+        String buttonText = buttonInstance.getText().toString();
+
+        if (screenText.startsWith(DEFAULT_SCREEN_VALUE)) {
+            newText = buttonInstance.getText().toString();
+            screen.setText(newText);
+        } else {
+            Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+            newText = screenText + buttonInstance.getText();
+            screen.setText(newText);
+        }
+
+
+    }
+
+    @OnClick(R.id.btn_plus)
+    public void Add() {
+        String screenText = screen.getText().toString();
+
+        Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+
+        String newText = screenText + ADDITION;
+        screen.setText(newText);
 //                        Add(screenText); Function to ensure one can use multiple operations
-
-            } else if (buttonText.equals((SUBTRACTION))) {
-                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
-
-                newText =  screenText + SUBTRACTION;
-                screen.setText(newText);
-//                        Subtract(screenText); Function to ensure one can use multiple operations
-            } else if (buttonText.equals((MULTIPLICATION))) {
-                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
-
-                newText = screenText + MULTIPLICATION;
-                screen.setText(newText);
-//                        Multiply(screenText); Function to ensure one can use multiple operations
-            } else if (buttonText.equals((DIVISION))) {
-                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
-
-                newText =  screenText + DIVISION;
-                screen.setText(newText);
-
-//                        Divide(screenText); Function to ensure one can use multiple operations
-            } else if (buttonText.equalsIgnoreCase(CLEAR)) {
-                screen.setText(DEFAULT_SCREEN_VALUE);
-                firstNumber = null;
-                secondNumber = null;
-                operation = null;
-            } else if (buttonText.equals(EQUALS)){
-                Equals(screen.getText().toString());
-
-            } else {
-                Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
-                newText = screenText + buttonInstance.getText();
-                screen.setText(newText);
-            }
-
-
-
-
-        }
-    };
-
-    private String Divide(String currentScreenText) {
-        String newScreenText;
-        int operatorIndex;
-
-        if (currentScreenText.contains("/")) {
-            operatorIndex = currentScreenText.indexOf("/");
-
-            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-
-        } else {
-            firstNumber = Double.parseDouble(currentScreenText);
-        }
-        newScreenText = firstNumber + " / ";
-
-        return newScreenText;
-    }
-
-    private String Multiply(String currentScreenText) {
-        String newScreenText;
-        int operatorIndex;
-
-        if (currentScreenText.contains("x")) {
-            operatorIndex = currentScreenText.indexOf("x");
-
-            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-
-        } else {
-            firstNumber = Double.parseDouble(currentScreenText);
-        }
-        newScreenText = firstNumber + " x ";
-
-        return newScreenText;
-    }
-
-    private String Subtract(String currentScreenText) {
-        String newScreenText;
-        int operatorIndex;
-
-        if (currentScreenText.contains("-")) {
-            operatorIndex = currentScreenText.indexOf("-");
-
-            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-
-        } else {
-            firstNumber = Double.parseDouble(currentScreenText);
-        }
-        newScreenText = firstNumber + " - ";
-
-        return newScreenText;
-    }
-
-    private String Add(String currentScreenText) {
-        String newScreenText;
+        /*String newScreenText;
         int operatorIndex;
 
         if (currentScreenText.contains("+")) {
@@ -158,13 +89,96 @@ public class CalculatorActivity extends AppCompatActivity {
         }
 
         newScreenText = firstNumber + " + ";
+*/
+    }
+    @OnClick(R.id.btn_minus)
+    public void Subtract() {
+        String screenText = screen.getText().toString();
+        Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-        return newScreenText;
+        String newText =  screenText + SUBTRACTION;
+        screen.setText(newText);
+//                        Subtract(screenText); Function to ensure one can use multiple operations
+       /* String newScreenText;
+        int operatorIndex;
+
+        if (currentScreenText.contains("-")) {
+            operatorIndex = currentScreenText.indexOf("-");
+
+            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
+
+        } else {
+            firstNumber = Double.parseDouble(currentScreenText);
+        }
+        newScreenText = firstNumber + " - ";
+*/
+    }
+    @OnClick(R.id.btn_multiply)
+    public void Multiply() {
+        String screenText = screen.getText().toString();
+
+        Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+
+        String newText = screenText + MULTIPLICATION;
+        screen.setText(newText);
+//                        Multiply(screenText); Function to ensure one can use multiple operations
+
+
+       /* String newScreenText;
+        int operatorIndex;
+
+        if (currentScreenText.contains("x")) {
+            operatorIndex = currentScreenText.indexOf("x");
+
+            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
+
+        } else {
+            firstNumber = Double.parseDouble(currentScreenText);
+        }
+        newScreenText = firstNumber + " x ";
+*/
+    }
+    @OnClick(R.id.btn_divide)
+    public void Divide() {
+        String screenText = screen.getText().toString();
+
+        Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+
+        String newText =  screenText + DIVISION;
+        screen.setText(newText);
+
+//                        Divide(screenText); Function to ensure one can use multiple operations
+
+
+     /*   String newScreenText;
+        int operatorIndex;
+
+        if (currentScreenText.contains("/")) {
+            operatorIndex = currentScreenText.indexOf("/");
+
+            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
+
+        } else {
+            firstNumber = Double.parseDouble(currentScreenText);
+        }
+        newScreenText = firstNumber + " / ";
+*/
+    }
+    @OnClick(R.id.btn_clear)
+    public void Clear()
+    {
+        screen.setText(DEFAULT_SCREEN_VALUE);
+        firstNumber = null;
+        secondNumber = null;
+        operation = null;
     }
 
-    private void Equals(String equation) {
+    @OnClick(R.id.btn_equals)
+    public void Equals() {
 
+        String equation = screen.getText().toString();
         int operationIndex;
+
 
         if (equation.contains(ADDITION)) {
             Log.i("full text", "the full equation: " + equation);
@@ -265,52 +279,4 @@ public class CalculatorActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculator);
-
-
-        //Button Instantiation
-        btnZero = findViewById(R.id.btn_0);
-        btnOne = findViewById(R.id.btn_1);
-        btnTwo = findViewById(R.id.btn_2);
-        btnThree = findViewById(R.id.btn_3);
-        btnFour = findViewById(R.id.btn_4);
-        btnFive = findViewById(R.id.btn_5);
-        btnSix = findViewById(R.id.btn_6);
-        btnSeven = findViewById(R.id.btn_7);
-        btnEight = findViewById(R.id.btn_8);
-        btnNine = findViewById(R.id.btn_9);
-
-        btnPoint = findViewById(R.id.btn_Point);
-        btnPlus = findViewById(R.id.btn_plus);
-        btnMinus = findViewById(R.id.btn_minus);
-        btnMultiply = findViewById(R.id.btn_multiply);
-        btnDivide = findViewById(R.id.btn_divide);
-        btnClear = findViewById(R.id.btn_clear);
-        btnEquals = findViewById(R.id.btn_Equals);
-
-        //Event Handler attached
-        btnZero.setOnClickListener(listener);
-        btnOne.setOnClickListener(listener);
-        btnTwo.setOnClickListener(listener);
-        btnThree.setOnClickListener(listener);
-        btnFour.setOnClickListener(listener);
-        btnFive.setOnClickListener(listener);
-        btnSix.setOnClickListener(listener);
-        btnSeven.setOnClickListener(listener);
-        btnEight.setOnClickListener(listener);
-        btnNine.setOnClickListener(listener);
-
-        btnPoint.setOnClickListener(listener);
-        btnPlus.setOnClickListener(listener);
-        btnMinus.setOnClickListener(listener);
-        btnMultiply.setOnClickListener(listener);
-        btnDivide.setOnClickListener(listener);
-        btnClear.setOnClickListener(listener);
-        btnEquals.setOnClickListener(listener);
-
-
-    }
 }
