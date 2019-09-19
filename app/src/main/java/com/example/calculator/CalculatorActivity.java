@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,21 +17,25 @@ public class CalculatorActivity extends AppCompatActivity {
 
     //Variables for the calculator
 
-    @BindView(R.id.screen) TextView screen;
-
-
-
+    @BindView(R.id.screen)
+    TextView screen;
 
 
     Double firstNumber = null, secondNumber = null;
-    String operation;
+    Operations operationType;
 
+    public enum Operations {
+        ADDITION,
+        SUBTRACTION,
+        MULTIPLICATION,
+        DIVISION
+    }
 
     public final static String DEFAULT_SCREEN_VALUE = "0";
-    public final static String ADDITION = "+";
-    public final static String SUBTRACTION = "-";
-    public final static String MULTIPLICATION = "x";
-    public final static String DIVISION = "/";
+    public final static String ADDITION_SIGN = "+";
+    public final static String SUBTRACTION_SIGN = "-";
+    public final static String MULTIPLICATION_SIGN = "x";
+    public final static String DIVISION_SIGN = "/";
     public final static String CLEAR = "C";
     public final static String EQUALS = "=";
 
@@ -44,9 +49,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.btn_0,R.id.btn_1,R.id.btn_2,R.id.btn_3,R.id.btn_4,R.id.btn_5,R.id.btn_6,R.id.btn_7,R.id.btn_8,R.id.btn_9,R.id.btn_Point})
-    public void numberWasClicked(Button button)
-    {
+    @OnClick({R.id.btn_0, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.btn_5, R.id.btn_6, R.id.btn_7, R.id.btn_8, R.id.btn_9, R.id.btn_Point})
+    public void numberWasClicked(Button button) {
         Button buttonInstance = button;
         String newText = null;
 
@@ -69,214 +73,155 @@ public class CalculatorActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_plus)
     public void Add() {
+        operationType = Operations.ADDITION;
+
         String screenText = screen.getText().toString();
 
         Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-        String newText = screenText + ADDITION;
+        String newText = screenText + ADDITION_SIGN;
         screen.setText(newText);
 //                        Add(screenText); Function to ensure one can use multiple operations
-        /*String newScreenText;
-        int operatorIndex;
 
-        if (currentScreenText.contains("+")) {
-            operatorIndex = currentScreenText.indexOf("+");
-
-            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));  //Because we do not want the operator in this
-
-        } else {
-            firstNumber = Double.parseDouble(currentScreenText);
-        }
-
-        newScreenText = firstNumber + " + ";
-*/
     }
+
     @OnClick(R.id.btn_minus)
     public void Subtract() {
+        operationType = Operations.SUBTRACTION;
         String screenText = screen.getText().toString();
-        Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+        Log.i("Adding", "Subtacting NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-        String newText =  screenText + SUBTRACTION;
+        String newText = screenText + SUBTRACTION_SIGN;
         screen.setText(newText);
 //                        Subtract(screenText); Function to ensure one can use multiple operations
-       /* String newScreenText;
-        int operatorIndex;
 
-        if (currentScreenText.contains("-")) {
-            operatorIndex = currentScreenText.indexOf("-");
-
-            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-
-        } else {
-            firstNumber = Double.parseDouble(currentScreenText);
-        }
-        newScreenText = firstNumber + " - ";
-*/
     }
+
     @OnClick(R.id.btn_multiply)
     public void Multiply() {
+        operationType = Operations.MULTIPLICATION;
+
         String screenText = screen.getText().toString();
 
-        Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+        Log.i("Adding", "Multiplying NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-        String newText = screenText + MULTIPLICATION;
+        String newText = screenText + MULTIPLICATION_SIGN;
         screen.setText(newText);
 //                        Multiply(screenText); Function to ensure one can use multiple operations
-
-
-       /* String newScreenText;
-        int operatorIndex;
-
-        if (currentScreenText.contains("x")) {
-            operatorIndex = currentScreenText.indexOf("x");
-
-            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-
-        } else {
-            firstNumber = Double.parseDouble(currentScreenText);
-        }
-        newScreenText = firstNumber + " x ";
-*/
     }
+
     @OnClick(R.id.btn_divide)
     public void Divide() {
+        operationType = Operations.DIVISION;
+
         String screenText = screen.getText().toString();
 
-        Log.i("Adding", "ADDING NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
+        Log.i("Adding", "Dividing NEW VALUES: ******CURRENT VALUE FOR********** VAR SCREENTEXT = " + screenText);
 
-        String newText =  screenText + DIVISION;
+        String newText = screenText + DIVISION_SIGN;
         screen.setText(newText);
 
 //                        Divide(screenText); Function to ensure one can use multiple operations
-
-
-     /*   String newScreenText;
-        int operatorIndex;
-
-        if (currentScreenText.contains("/")) {
-            operatorIndex = currentScreenText.indexOf("/");
-
-            firstNumber = Double.parseDouble(currentScreenText.substring(0, operatorIndex));
-
-        } else {
-            firstNumber = Double.parseDouble(currentScreenText);
-        }
-        newScreenText = firstNumber + " / ";
-*/
     }
+
     @OnClick(R.id.btn_clear)
-    public void Clear()
-    {
+    public void Clear() {
         screen.setText(DEFAULT_SCREEN_VALUE);
         firstNumber = null;
         secondNumber = null;
-        operation = null;
     }
 
     @OnClick(R.id.btn_equals)
     public void Equals() {
 
         String equation = screen.getText().toString();
+
+        Log.i("We doin MATH!!", "The Value of the equation variable is " + equation);
+
         int operationIndex;
 
+        switch (operationType) {
+            case ADDITION:
 
-        if (equation.contains(ADDITION)) {
-            Log.i("full text", "the full equation: " + equation);
+                operationIndex = equation.indexOf(ADDITION_SIGN);
+                String firstNumberString = equation.substring(0, operationIndex ), secondNumberString = equation.substring(operationIndex);
+
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n FIRST NUMBER STRING: " + firstNumberString + "\nSECOND NUMBER STRING: " + secondNumberString);
 
 
-            operationIndex = equation.indexOf(ADDITION) + 1;
-            String firstNumberString = equation.substring(0,operationIndex - 1),secondNumberString = equation.substring(operationIndex);
+                firstNumber = Double.parseDouble(firstNumberString);
+                secondNumber = Double.parseDouble(secondNumberString);
+
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n FIRST NUMBER: " + firstNumber + "\nSECOND NUMBER : " + secondNumber );
 
 
+                double result = firstNumber + secondNumber;
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n RESULTS OF THE CARNAGE: : " + result);
+                screen.setText(String.valueOf(result));
 
-            Log.i("*****first NumberString", "firstNumberString was: " + firstNumberString);
-            Log.i("***second NumberString", "secondNumberString was: " + secondNumberString);
+                break;
+            case SUBTRACTION:
 
-            firstNumber = Double.parseDouble(firstNumberString);
-            secondNumber = Double.parseDouble(secondNumberString);
 
-            Log.i("first Number ", "firstNumber was: " + firstNumber);
-            Log.i("second Number ", "secondNumber was: " + secondNumber);
+                operationIndex = equation.indexOf(SUBTRACTION_SIGN);
+                firstNumberString = equation.substring(0, operationIndex);
+                secondNumberString = equation.substring(operationIndex + 1);
 
-            double result =firstNumber + secondNumber;
-            Log.i("***********EndResult ", "The end result was: " + result);
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n FIRST NUMBER STRING: " + firstNumberString + "\nSECOND NUMBER STRING: " + secondNumberString);
 
-            screen.setText(String.valueOf(result));
 
+                firstNumber = Double.parseDouble(firstNumberString);
+                secondNumber = Double.parseDouble(secondNumberString);
+
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n FIRST NUMBER: " + firstNumber + "\nSECOND NUMBER : " + secondNumber );
+
+
+                result = firstNumber + secondNumber;
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n RESULTS OF THE CARNAGE: : " + result);
+                screen.setText(String.valueOf(result));
+
+                break;
+            case MULTIPLICATION:
+
+                operationIndex = equation.indexOf(MULTIPLICATION_SIGN);
+                firstNumberString = equation.substring(0, operationIndex );
+                secondNumberString = equation.substring(operationIndex + 1);
+
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n FIRST NUMBER STRING: " + firstNumberString + "\nSECOND NUMBER STRING: " + secondNumberString);
+
+
+                firstNumber = Double.parseDouble(firstNumberString);
+                secondNumber = Double.parseDouble(secondNumberString);
+
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n FIRST NUMBER: " + firstNumber + "\nSECOND NUMBER : " + secondNumber );
+
+
+                result = firstNumber * secondNumber;
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n RESULTS OF THE CARNAGE: : " + result);
+                screen.setText(String.valueOf(result));
+                break;
+            case DIVISION:
+
+
+                operationIndex = equation.indexOf(DIVISION_SIGN);
+                firstNumberString = equation.substring(0, operationIndex );
+                secondNumberString = equation.substring(operationIndex + 1);
+
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n FIRST NUMBER STRING: " + firstNumberString + "\nSECOND NUMBER STRING: " + secondNumberString);
+
+
+                firstNumber = Double.parseDouble(firstNumberString);
+                secondNumber = Double.parseDouble(secondNumberString);
+
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n FIRST NUMBER: " + firstNumber + "\nSECOND NUMBER : " + secondNumber );
+
+
+                result = firstNumber / secondNumber;
+                Log.i("We doin MATH!!", "TIME TO START ADDING!!! \n RESULTS OF THE CARNAGE: : " + result);
+                screen.setText(String.valueOf(result));
+                break;
         }
-        if (equation.contains(SUBTRACTION)) {
-            Log.i("full text", "the full equation: " + equation);
 
-
-            operationIndex = equation.indexOf(SUBTRACTION) + 1;
-            String firstNumberString = equation.substring(0,operationIndex - 1);
-            String secondNumberString = equation.substring(operationIndex);
-
-
-
-            Log.i("*****first NumberString", "firstNumberString was: " + firstNumberString);
-            Log.i("***second NumberString", "secondNumberString was: " + secondNumberString);
-
-            firstNumber = Double.parseDouble(firstNumberString);
-            secondNumber = Double.parseDouble(secondNumberString);
-
-            Log.i("first Number ", "firstNumber was: " + firstNumber);
-            Log.i("second Number ", "secondNumber was: " + secondNumber);
-
-            double result =firstNumber - secondNumber;
-            Log.i("***********EndResult ", "The end result was: " + result);
-
-            screen.setText(String.valueOf(result));
-
-        }
-        if (equation.contains(DIVISION)) {
-            Log.i("full text", "the full equation: " + equation);
-
-
-            operationIndex = equation.indexOf(DIVISION) + 1;
-            String firstNumberString = equation.substring(0,operationIndex - 1),secondNumberString = equation.substring(operationIndex);
-
-
-
-            Log.i("*****first NumberString", "firstNumberString was: " + firstNumberString);
-            Log.i("***second NumberString", "secondNumberString was: " + secondNumberString);
-
-            firstNumber = Double.parseDouble(firstNumberString);
-            secondNumber = Double.parseDouble(secondNumberString);
-
-            Log.i("first Number ", "firstNumber was: " + firstNumber);
-            Log.i("second Number ", "secondNumber was: " + secondNumber);
-
-            double result =firstNumber / secondNumber;
-            Log.i("***********EndResult ", "The end result was: " + result);
-
-            screen.setText(String.valueOf(result));
-
-        }
-        if (equation.contains(MULTIPLICATION)) {
-            Log.i("full text", "the full equation: " + equation);
-
-
-            operationIndex = equation.indexOf(MULTIPLICATION) + 1;
-            String firstNumberString = equation.substring(0,operationIndex - 1),secondNumberString = equation.substring(operationIndex);
-
-
-
-            Log.i("*****first NumberString", "firstNumberString was: " + firstNumberString);
-            Log.i("***second NumberString", "secondNumberString was: " + secondNumberString);
-
-            firstNumber = Double.parseDouble(firstNumberString);
-            secondNumber = Double.parseDouble(secondNumberString);
-
-            Log.i("first Number ", "firstNumber was: " + firstNumber);
-            Log.i("second Number ", "secondNumber was: " + secondNumber);
-
-            double result =firstNumber * secondNumber;
-            Log.i("***********EndResult ", "The end result was: " + result);
-
-            screen.setText(String.valueOf(result));
-
-        }
     }
 
 }
